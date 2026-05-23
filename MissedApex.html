@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missed Apex B.V. Spa 24</title>
+    <link rel="stylesheet" href="MissedApex.css">
+    <link rel="stylesheet" href="https://dl.dafont.com/dl/?f=speeday">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="hero-section">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <img src="spa-logo.png" alt="iRacing Spa 24 Logo" class="logo">
+            
+            <h1 class="team-name">MISSED APEX B.V.</h1>
+            <div class="countdown-box">
+                <span class="timer" id="countdown-timer">00:00:00:00</span>
+            </div>
+            <h2 class="countdown-title" id="countdown-label">LADEN...</h2>
+        </div>
+    </header>
+
+    <main class="schedule-section">
+        <h1 class="main-title">LINE-UP SCHEMA</h1>
+
+        <div class="lineup-table">
+            
+            <div class="table-header">
+                <h3 class="column-title driver-title">DRIVER</h3>
+                <div class="empty-middle"></div> 
+                <h3 class="column-title spotter-title">SPOTTER</h3>
+            </div>
+
+            <div class="table-row current-section">
+                <div class="table-cell left" id="current-driver-container"></div>
+                <div class="table-cell middle">
+                    <span class="status-label-current">CURRENT</span>
+                </div>
+                <div class="table-cell right" id="current-spotter-container"></div>
+            </div>
+
+            <div class="table-row next-up-section">
+                <div class="table-cell left" id="upcoming-drivers-container"></div>
+                <div class="table-cell middle">
+                    <span class="status-label-next">NEXT UP</span>
+                </div>
+                <div class="table-cell right" id="upcoming-spotters-container"></div>
+            </div>
+
+        </div>
+    </main>
+
+<script>
+        // --- CONFIGURATIE DATA ---
+        const startKwalificatie = new Date("2026-05-23T14:00:00").getTime();
+        const raceStartDatum = new Date("2026-05-23T15:00:00"); 
+        const eindeRace         = new Date("2026-05-24T15:00:00").getTime();
+        const startRace         = raceStartDatum.getTime(); 
+
+        let csvData = ""; // Wordt live geladen via rijdschema.csv
+
+        // Inladen van het CSV-bestand
+        fetch('iRacing 24H Spa 10-12 Juli 2026 - Rijdschema.csv')
+            .then(response => {
+                if (!response.ok) throw new Error("Kan rijdschema.csv niet vinden.");
+                return response.text();
+            })
+            .then(text => {
+                csvData = text;
+                updateSchedule();
+            })
+            .catch(error => {
+                console.error("Fout bij inladen CSV:", error);
+                document.getElementById('current-driver-container').innerHTML = "Geen rijdschema.csv gevonden.";
+            });
+
+        // Countdown timer
+        function updateTimer() {
+            const nu = new Date().getTime(); // VOOR TESTEN: Zet hier je testtijd neer, bijv: new Date("2026-07-11T20:00:00").getTime();
+            const timerElement = document.getElementById("countdown-timer");
+            const labelElement = document.getElementById("countdown-label");
+
+            let doeltijd, statusTekst, toonDagen = false;
+
+            if (nu < startKwalificatie) {
+                doeltijd = startKwalificatie; statusTekst = "TOT START KWALIFICATIE"; toonDagen = true;
+            } else if (nu >= startKwalificatie && nu < startRace) {
+                doeltijd = startRace; statusTekst = "TOT EINDE KWALIFICATIE";
+            } else if (nu >= startRace && nu < eindeRace) {
+                doeltijd = eindeRace; statusTekst = "RACE";
+            } else {
+                labelElement.innerText = "RACE GEFINISHT"; timerElement.innerText = "00:00:00"; return;
+            }
+
+            const verschil = doeltijd - nu;
+            const dagen = Math.floor(verschil / (1000 * 60 * 60 * 24));
+            const uren = Math.floor((verschil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minuten = Math.floor((verschil % (1000 * 60 * 60)) / (1000 * 60));
+            const seconden = Math.floor((verschil % (1000 * 60)) / 1000);
+
+            const dStr = dagen < 10 ? "0" + dagen : dagen;
+            const hStr = uren < 10 ? "0" + uren : uren;
+            const mStr = minuten < 10 ? "0" + minuten : minuten;
+            const sStr = seconden < 10 ? "0" + seconden : seconden;
+
+            labelElement.innerText = statusTekst;
+            timerElement.innerText = toonDagen ? `${dStr}:${hStr}:${mStr}:${sStr}` : `${hStr}:${mStr}:${sStr}`;
+        }
+
+        // Volledig flexibele parser die kijkt naar de daadwerkelijke tekstuele tijden
+        function parseScheduleCSV(csvText) {
+            if (!csvText) return { drivers: [], spotters: [] };
+            
+            let rawLines = csvText.split('\n').map(line => line.trim()).filter(line => line !== "");
+            
+            let driverHeaders = [];
+            let spotterHeaders = [];
+            let drivers = [];
+            let spotters = [];
+            let isSpotterSection = false;
+
+            rawLines.forEach(lineStr => {
+                const row = lineStr.split(',').map(item => item.trim());
+                if (!row || row.length < 2 || row[0] === "") return;
+                
+                if (row[0] === "DRIVER") {
+                    driverHeaders = row.slice(1).filter(h => h !== "");
+                    isSpotterSection = false;
+                    return;
+                } else if (row[0] === "SPOTTER") {
+                    spotterHeaders = row.slice(1).filter(h => h !== "");
+                    isSpotterSection = true;
+                    return;
+                }
+
+                const name = row[0];
+                const shifts = row.slice(1);
+                const activeHeaders = isSpotterSection ? spotterHeaders : driverHeaders;
+
+                // We houden per rijder/spotter de actuele virtuele datum bij
+                let huidigeDatum = new Date(raceStartDatum);
+                let vorigStartUur = -1;
+
+                shifts.forEach((val, index) => {
+                    if (!activeHeaders[index]) return;
+
+                    const timeRange = activeHeaders[index];
+                    const timeParts = timeRange.split('-');
+                    if (timeParts.length !== 2) return;
+
+                    const [startTimeStr, endTimeStr] = timeParts.map(t => t.trim());
+                    const [startH, startM] = startTimeStr.split(':').map(Number);
+                    const [endH, endM] = endTimeStr.split(':').map(Number);
+
+                    // DATUM-TRACKER EN SCHAKELPUNT:
+                    // Als het startUur van deze kolom lager is dan het startUur van de vorige kolom,
+                    // zijn we ongetwijfeld de daggrens (middernacht) gepasseerd.
+                    if (vorigStartUur !== -1 && startH < vorigStartUur) {
+                        huidigeDatum.setDate(huidigeDatum.getDate() + 1);
+                    }
+                    vorigStartUur = startH;
+
+                    if (val.toUpperCase() === 'X') {
+                        // Maak de exacte starttijd voor deze specifieke shift
+                        const exactStart = new Date(huidigeDatum.getFullYear(), huidigeDatum.getMonth(), huidigeDatum.getDate(), startH, startM, 0).getTime();
+                        
+                        // Bereken de eindtijd. Als de eindtijd voorbij middernacht schiet (bijv. 23:00 - 00:30), moet de einddatum +1 dag.
+                        let eindDatum = new Date(huidigeDatum);
+                        if (endH < startH || (endH === startH && endM < startM)) {
+                            eindDatum.setDate(eindDatum.getDate() + 1);
+                        }
+                        const exactEnd = new Date(eindDatum.getFullYear(), eindDatum.getMonth(), eindDatum.getDate(), endH, endM, 0).getTime();
+
+                        const entry = { 
+                            name: name, 
+                            startTimeText: startTimeStr, 
+                            endTimeText: endTimeStr, 
+                            exactStart: exactStart, 
+                            exactEnd: exactEnd 
+                        };
+                        
+                        if (isSpotterSection) spotters.push(entry); else drivers.push(entry);
+                    }
+                });
+            });
+
+            return { drivers, spotters };
+        }
+
+        function updateSchedule() {
+            const { drivers, spotters } = parseScheduleCSV(csvData);
+            
+            // HIER JE TESTTIJD INVOEREN (Vervang Date().getTime() tijdelijk om te testen)
+            const nu = new Date().getTime(); 
+
+            const sorteerChronologisch = (a, b) => a.exactStart - b.exactStart;
+            drivers.sort(sorteerChronologisch);
+            spotters.sort(sorteerChronologisch);
+
+            const currentDriverBox = document.getElementById('current-driver-container');
+            const currentSpotterBox = document.getElementById('current-spotter-container');
+            const upcomingDriversBox = document.getElementById('upcoming-drivers-container');
+            const upcomingSpottersBox = document.getElementById('upcoming-spotters-container');
+
+            currentDriverBox.innerHTML = "";
+            currentSpotterBox.innerHTML = "";
+            upcomingDriversBox.innerHTML = "";
+            upcomingSpottersBox.innerHTML = "";
+
+            // --- DRIVERS MAP ---
+            let currentDriverFound = false;
+            drivers.forEach(d => {
+                if (nu >= d.exactStart && nu < d.exactEnd && !currentDriverFound) {
+                    currentDriverBox.innerHTML = `
+                        <div class="driver-card current">
+                            <span class="person-name">${d.name}</span>
+                            <span class="person-time">${d.startTimeText} - ${d.endTimeText}</span>
+                        </div>`;
+                    currentDriverFound = true;
+                } else if (d.exactStart >= nu) {
+                    upcomingDriversBox.innerHTML += `
+                        <div class="driver-card upcoming">
+                            <span class="person-name-next">${d.name}</span>
+                            <span class="person-time-next">${d.startTimeText} - ${d.endTimeText}</span>
+                        </div>`;
+                }
+            });
+
+            if (!currentDriverFound) {
+                currentDriverBox.innerHTML = `<div class="driver-card current" style="background-color: #1a1a1a; color: #888;"><span class="person-name">Geen actieve rijder</span><span class="person-time">--:--</span></div>`;
+            }
+
+            // --- SPOTTERS MAP ---
+            let currentSpotterFound = false;
+            spotters.forEach(s => {
+                if (nu >= s.exactStart && nu < s.exactEnd && !currentSpotterFound) {
+                    currentSpotterBox.innerHTML = `
+                        <div class="spotter-card current">
+                            <span class="person-name">${s.name}</span>
+                            <span class="person-time">${s.startTimeText} - ${s.endTimeText}</span>
+                        </div>`;
+                    currentSpotterFound = true;
+                } else if (s.exactStart >= nu) {
+                    upcomingSpottersBox.innerHTML += `
+                        <div class="spotter-card upcoming">
+                            <span class="person-name-next">${s.name}</span>
+                            <span class="person-time-next">${s.startTimeText} - ${s.endTimeText}</span>
+                        </div>`;
+                }
+            });
+
+            if (!currentSpotterFound) {
+                currentSpotterBox.innerHTML = `<div class="spotter-card current" style="background-color: #1a1a1a; color: #888;"><span class="person-name">Geen actieve spotter</span><span class="person-time">--:--</span></div>`;
+            }
+        }
+
+        // Start loops
+        updateTimer();
+        setInterval(() => {
+            updateTimer();
+            updateSchedule();
+        }, 1000);
+    </script>
+
+</body>
+</html>

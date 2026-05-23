@@ -1,0 +1,346 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #0b0b0b;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- HERO SECTION (Aangepast) --- */
+.hero-section {
+    position: relative;
+    height: 50vh; /* Neemt 45% van de schermhoogte in */
+    background-image: url('spa-background.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Donkere filter over de foto voor betere leesbaarheid (behouden) */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), #0b0b0b);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    height: 500px;
+}
+
+.logo {
+    margin-top: 0;
+    width: 200px;
+    margin-bottom: 0px;
+}
+
+/* Nieuwe teamnaamstijl met oranje-wit verloop */
+.team-name {
+    font-family: 'Speeday', sans-serif;
+    font-style: italic;
+    font-weight: 100;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    margin-bottom: 100px;
+    
+    /* De bovenste laag maken we helemaal wit */
+    color: #ffffff;
+    position: relative;
+    display: inline-block;
+    z-index: 2;
+}
+
+.team-name::after {
+    content: "MISSED APEX B.V."; 
+    
+    position: absolute;
+    left: 2px;
+    top: 0px; /* Hoe groter dit getal, hoe verder de verlooptekst eronderuit komt */
+    z-index: -1;
+    width: 100%;
+    
+    /* Het verloop van jouw specifieke oranje naar rood */
+    background: linear-gradient(to right, #fe921c, #ff0000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.countdown-title {
+    font-family: 'Orbitron', sans-serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: #ffffff;
+    margin-bottom: 8px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.countdown-box {
+    position: relative;
+    padding: 15px 150px;
+    border-radius: 12px;
+    background: linear-gradient(to right, #202020, #000000) padding-box, 
+                linear-gradient(to right, #fe921c, #ff0000) border-box;
+    border: 2px solid transparent;
+    box-shadow: 0 0 15px rgba(255, 51, 0, 0.3);
+    margin-bottom: 15px;
+}
+.timer {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    letter-spacing: 2px;
+}
+
+/* --- SCHEDULE SECTION (Aangepast) --- */
+.schedule-section {
+    background: linear-gradient(to bottom, #0b0b0b, #121212);
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+
+/* Hoofdtitel (behouden, nu ook met verloop) */
+.main-title {
+    margin-top: 100px;
+    font-family: 'Speeday', sans-serif; /* Vervang dit eventueel door jouw eigen font-naam */
+    font-weight: 100;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 100px;
+    text-align: center;
+    
+    /* Voorkomt dat de schuine letters aan de rechterkant wegvallen */
+    padding-right: 20px; 
+    
+    color: #ffffff;
+    position: relative;
+    display: inline-block;
+    z-index: 2;
+}
+
+.main-title::after{
+    content: "LINE-UP SCHEMA"; 
+    
+    position: absolute;
+    left: -7px;
+    top: 0px;
+    z-index: -1;
+    width: 100%;
+    
+    /* Het verloop van jouw specifieke oranje naar rood */
+    background: linear-gradient(to right, #fe921c, #ff0000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* Line-up tabel layout */
+.lineup-table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px; /* Iets breder voor twee kolommen */
+}
+
+.table-header, .table-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+/* Zorgt dat de "Next Up" rij de kolommen aan de bovenkant uitlijnt in plaats van het midden */
+.next-up-section {
+    align-items: flex-start; 
+}
+
+.table-cell {
+    flex: 1;
+    padding: 0 10px;
+    text-align: center;
+    vertical-align: top;
+}
+
+.table-cell.middle {
+    flex: 0 0 150px; /* Vaste breedte voor het middenlabel */
+    text-align: center;
+}
+
+.empty-middle {
+     flex: 0 0 150px;
+}
+
+/* Kolom Titels */
+.column-title {
+    font-family: 'Speeday', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    font-weight: 100;
+}
+
+.driver-title {
+    text-align: left;
+    padding-left: 220px;
+}
+
+.spotter-title {
+    text-align: right;
+    padding-left: 220px;
+    margin-left: 220px;
+}
+
+/* --- MIDDEN LABELS (Gecorrigeerd voor top-uitlijning) --- */
+.status-label-current {
+    font-family: 'Orbitron', sans-serif;
+    font-style: italic;
+    font-weight: 100;
+    font-size: 1.2rem;
+    color: #ffffff;
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    margin-bottom: 20px; /* Extra ruimte onder het huidige label */
+    margin-left: 10px;
+}
+
+.status-label-next {
+    font-family: 'Orbitron', sans-serif;
+    font-style: italic;
+    font-weight: 100;
+    font-size: 1.0rem;
+    color: #ffffff;
+    opacity: 0.8;
+    display: flex;
+    align-items: center;     /* Centreert de tekst binnen zijn eigen 50px hoogte */
+    justify-content: center;  /* Centreert horizontaal */
+    height: 50px;            /* Exact even hoog als de eerste grijze kaart */
+    margin-top: 0px;         
+    padding-left: 10px;      /* Iets teruggebracht vanaf 20px voor betere centrering in de 150px kolom */
+}
+
+/* Kaarten (Aangepast voor twee kolommen en twee info-velden) */
+.table-row {
+    margin-bottom: 50px;
+}
+
+.driver-card, .spotter-card {
+    border-radius: 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px;
+    margin-bottom: 12px; /* Ruimte tussen kaarten in de kolom */
+}
+
+/* Witte actieve kaarten */
+.driver-card.current, .spotter-card.current {
+    background-color: #ffffff;
+    color: #000000;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px; /* Extra ruimte onder actieve kaart */
+    padding: 25px 30px; /* Iets meer padding voor actieve kaarten */
+}
+
+.person-name {
+    font-weight: 700;
+    font-size: 1.6rem;
+}
+
+.person-name-next {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: white;
+    opacity: 1;
+}
+
+
+.person-time {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #333333;
+}
+
+.person-time-next {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+.driver-card.upcoming, .spotter-card.upcoming {
+    background-color: #555555;
+    opacity: 0.8;
+}
+
+.driver-card.upcoming:hover, .spotter-card.upcoming:hover {
+    box-shadow: 0px 0px 10px rgba(85, 85, 85, 1);
+}
+
+/* Responsive aanpassingen voor mobiel */
+@media (max-width: 768px) {
+    .table-header, .table-row {
+        flex-direction: column;
+    }
+    
+    /* Reset de top-uitlijning op mobiel zodat het label weer netjes boven de gestapelde blokken staat */
+    .next-up-section {
+        align-items: center; 
+    }
+    
+    .table-cell.middle {
+        order: -1; /* Label boven de kolommen plaatsen */
+        flex: 1;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .empty-middle {
+        display: none;
+    }
+
+    .table-cell.left, .table-cell.right {
+        width: 100%;
+        max-width: 450px; /* Breedte beperken op grotere mobiel */
+        margin: 0 auto;
+    }
+
+    .driver-title, .spotter-title {
+        text-align: center;
+    }
+
+    .team-name {
+        font-size: 1.8rem;
+    }
+
+    .main-title {
+        font-size: 1.8rem;
+    }
+}
