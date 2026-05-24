@@ -16,7 +16,7 @@ body {
 /* --- HERO SECTION (Aangepast) --- */
 .hero-section {
     position: relative;
-    height: 50vh; /* Neemt 45% van de schermhoogte in */
+    height: 60vh; /* Neemt 45% van de schermhoogte in */
     background-image: url('spa-background.jpg');
     background-size: cover;
     background-position: center;
@@ -35,6 +35,7 @@ body {
     height: 100%;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), #0b0b0b);
     z-index: 1;
+    
 }
 
 .hero-content {
@@ -209,7 +210,7 @@ body {
     padding-left: 220px;
 }
 
-.spotter-title {
+.column-title spotter-title {
     text-align: right;
     padding-left: 220px;
     margin-left: 220px;
@@ -304,43 +305,152 @@ body {
     box-shadow: 0px 0px 10px rgba(85, 85, 85, 1);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Responsive aanpassingen voor mobiel */
+/* --- MOBIELE RESPONSIVE INDELING (Uitsluitend voor telefoons) --- */
 @media (max-width: 768px) {
-    .table-header, .table-row {
-        flex-direction: column;
+    
+    /* Verberg de desktop kolomkoppen (DRIVERS / SPOTTERS) bovenin */
+    .table-header {
+        display: none !important;
     }
     
-    /* Reset de top-uitlijning op mobiel zodat het label weer netjes boven de gestapelde blokken staat */
-    .next-up-section {
-        align-items: center; 
+    /* Verander de tabelrijen in verticale stapels */
+    .table-row {
+        flex-direction: column !important;
+        margin-bottom: 30px;
+        width: 100%;
     }
     
+    /* Forceer alle cellen naar de volledige breedte */
+    .table-cell.left, 
+    .table-cell.right, 
     .table-cell.middle {
-        order: -1; /* Label boven de kolommen plaatsen */
-        flex: 1;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-    
-    .empty-middle {
-        display: none;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: unset !important;
+        padding: 0 !important;
     }
 
-    .table-cell.left, .table-cell.right {
-        width: 100%;
-        max-width: 450px; /* Breedte beperken op grotere mobiel */
-        margin: 0 auto;
+    /* --- 1. DE CURRENT SECTIE --- */
+    .current-section {
+        display: flex;
+        flex-direction: column !important;
     }
+    /* Volgorde bepalen: Eerst label, dan driver, dan spotter */
+    .current-section .table-cell.middle { order: 1; margin-bottom: 10px; }
+    .current-section .table-cell.left   { order: 2; }
+    .current-section .table-cell.right  { order: 3; }
 
-    .driver-title, .spotter-title {
+    /* --- 2. DE NEXT UP SECTIE --- */
+    .next-up-section {
+        display: flex;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    /* De magische volgorde: Eerst het label, dan ALLE drivers, dan ALLE spotters */
+    .next-up-section .table-cell.middle { order: 1; margin-bottom: 20px; }
+    .next-up-section .table-cell.left   { order: 2; width: 100% !important; }
+    .next-up-section .table-cell.right  { order: 3; width: 100% !important; margin-top: 20px; }
+
+    /* Extra titels toevoegen boven de lijsten via CSS zodat je weet wat wat is */
+    .next-up-section #upcoming-drivers-container::before {
+        content: "DRIVERS";
+        display: block;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.9rem;
+        color: #727272;
         text-align: center;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+    }
+
+    .next-up-section #upcoming-spotters-container::before {
+        content: "SPOTTERS";
+        display: block;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.9rem;
+        color: #727272;
+        text-align: center;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        letter-spacing: 1px;
+    }
+
+    /* Midden labels mooi centreren op mobiel */
+    .status-label-current, .status-label-next {
+        margin-bottom: 2 auto !important;
+        padding: 0 !important;
+        height: auto !important;
+        font-size: 1rem !important;
+    }
+
+    .hero-section{
+
+        height: 80vh; /* Neemt 45% van de schermhoogte in */
+    }
+
+    .logo {
+        margin-top: 0;
+        width: 100px;
+        margin-bottom: 0px;
+}
+
+    .hero-content{
+        margin-top: 200px;
     }
 
     .team-name {
-        font-size: 1.8rem;
+    margin-bottom: 50px;
+    font-size: 14px;
+}
+
+    .countdown-box {
+    padding: 15px 50px;
     }
 
-    .main-title {
-        font-size: 1.8rem;
+    .timer{
+        font-size: 25px;
     }
+
+    .countdown-title{
+        font-size: 10px;
+    }
+
+    .person-name{
+        font-size: 15px;
+    }
+
+    .person-name-next{
+        font-size: 15px;
+    }
+
+    
+    .person-time{
+        font-size: 15px;
+    }
+
+    .person-time-next{
+        font-size: 15px;
+    }
+    
 }
