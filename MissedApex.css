@@ -35,7 +35,6 @@ body {
     height: 100%;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), #0b0b0b);
     z-index: 1;
-    
 }
 
 .hero-content {
@@ -327,77 +326,79 @@ body {
 
 /* Responsive aanpassingen voor mobiel */
 /* --- MOBIELE RESPONSIVE INDELING (Uitsluitend voor telefoons) --- */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     
     /* Verberg de desktop kolomkoppen (DRIVERS / SPOTTERS) bovenin */
-    .table-header {
+    .lineup-table .table-header {
         display: none !important;
     }
     
     /* Verander de tabelrijen in verticale stapels */
-    .table-row {
+    .lineup-table .table-row {
+        display:flex !important;
         flex-direction: column !important;
-        margin-bottom: 30px;
-        width: 100%;
+        margin-bottom: 30px !important;
+        width: 100% !important;
     }
     
     /* Forceer alle cellen naar de volledige breedte */
-    .table-cell.left, 
-    .table-cell.right, 
-    .table-cell.middle {
+    .lineup-table .table-cell.left, 
+    .lineup-table .table-cell.right, 
+    .lineup-table .table-cell.middle {
         width: 100% !important;
         max-width: 100% !important;
-        flex: unset !important;
+        flex: none !important;
         padding: 0 !important;
+        display: block !important;
     }
 
     /* --- 1. DE CURRENT SECTIE --- */
-    .current-section {
-        display: flex;
+    .lineup-table .current-section {
+        display: flex !important;
         flex-direction: column !important;
     }
     /* Volgorde bepalen: Eerst label, dan driver, dan spotter */
-    .current-section .table-cell.middle { order: 1; margin-bottom: 10px; }
-    .current-section .table-cell.left   { order: 2; }
-    .current-section .table-cell.right  { order: 3; }
+    .lineup-table .current-section .table-cell.middle { order: 1 !important; margin-bottom: 10px !important; }
+    .lineup-table .current-section .table-cell.left   { order: 2 !important; }
+    .lineup-table .current-section .table-cell.right  { order: 3 !important; }
 
     /* --- 2. DE NEXT UP SECTIE --- */
-    .next-up-section {
-        display: flex;
+    .lineup-table .next-up-section {
+        display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
     }
     /* De magische volgorde: Eerst het label, dan ALLE drivers, dan ALLE spotters */
-    .next-up-section .table-cell.middle { order: 1; margin-bottom: 20px; }
-    .next-up-section .table-cell.left   { order: 2; width: 100% !important; }
-    .next-up-section .table-cell.right  { order: 3; width: 100% !important; margin-top: 20px; }
+    .lineup-table .next-up-section .table-cell.middle { order: 1 !important; margin-bottom: 20px !important; }
+    .lineup-table .next-up-section .table-cell.left   { order: 2 !important; width: 100% !important; }
+    .lineup-table .next-up-section .table-cell.right  { order: 3 !important; width: 100% !important; margin-top: 20px !important; }
 
     /* Extra titels toevoegen boven de lijsten via CSS zodat je weet wat wat is */
-    .next-up-section #upcoming-drivers-container::before {
-        content: "DRIVERS";
-        display: block;
-        font-family: 'Orbitron', sans-serif;
-        font-size: 0.9rem;
-        color: #727272;
-        text-align: center;
-        margin-bottom: 10px;
-        letter-spacing: 1px;
+    .lineup-table .next-up-section #upcoming-drivers-container::before {
+        content: "DRIVERS" !important;
+        display: block !important;
+        font-family: 'Orbitron', sans-serif !important;
+        font-size: 0.9rem !important;
+        color: #727272 !important;
+        text-align: center !important;
+        margin-bottom: 10px !important;
+        letter-spacing: 1px !important; 
     }
 
-    .next-up-section #upcoming-spotters-container::before {
-        content: "SPOTTERS";
-        display: block;
-        font-family: 'Orbitron', sans-serif;
-        font-size: 0.9rem;
-        color: #727272;
-        text-align: center;
-        margin-bottom: 10px;
-        margin-top: 10px;
-        letter-spacing: 1px;
+    .lineup-table .next-up-section #upcoming-spotters-container::before {
+        content: "SPOTTERS" !important;
+        display: block !important;
+        font-family: 'Orbitron', sans-serif !important;
+        font-size: 0.9rem !important;
+        color: #727272 !important;
+        text-align: center !important;
+        margin-bottom: 10px !important;
+        margin-top: 10px !important;
+        letter-spacing: 1px !important;
     }
 
     /* Midden labels mooi centreren op mobiel */
-    .status-label-current, .status-label-next {
+    .lineup-table .status-label-current, .lineup-table .status-label-next {
         margin-bottom: 2 auto !important;
         padding: 0 !important;
         height: auto !important;
@@ -406,51 +407,51 @@ body {
 
     .hero-section{
 
-        height: 80vh; /* Neemt 45% van de schermhoogte in */
+        height: 80vh !important; /* Neemt 45% van de schermhoogte in */
     }
 
     .logo {
-        margin-top: 0;
-        width: 100px;
-        margin-bottom: 0px;
+        margin-top: 0 !important;
+        width: 100px !important;
+        margin-bottom: 0px !important;
 }
 
     .hero-content{
-        margin-top: 200px;
+        margin-top: 200px !important;
     }
 
     .team-name {
-    margin-bottom: 50px;
-    font-size: 14px;
+    margin-bottom: 50px !important;
+    font-size: 14px !important;
 }
 
     .countdown-box {
-    padding: 15px 50px;
+    padding: 15px 50px !important;
     }
 
     .timer{
-        font-size: 25px;
+        font-size: 25px !important;
     }
 
     .countdown-title{
-        font-size: 10px;
+        font-size: 10px !important;
     }
 
     .person-name{
-        font-size: 15px;
+        font-size: 15px !important;
     }
 
     .person-name-next{
-        font-size: 15px;
+        font-size: 15px !important;
     }
 
     
     .person-time{
-        font-size: 15px;
+        font-size: 15px !important;
     }
 
     .person-time-next{
-        font-size: 15px;
+        font-size: 15px !important;
     }
     
 }
