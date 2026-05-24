@@ -111,7 +111,7 @@ body {
     letter-spacing: 2px;
 }
 
-/* --- LIVE STREAM LINK & ANIMATIE --- */
+/* --- LIVE STREAM LINK & ANIMATIE (BOVEN) --- */
 .live-stream-trigger {
     text-align: center;
     margin-top: -30px;
@@ -168,14 +168,8 @@ body {
 }
 
 @keyframes pulse {
-    0% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
-    100% {
-        transform: scale(2.5);
-        opacity: 0;
-    }
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(2.5); opacity: 0; }
 }
 
 /* --- SCHEDULE SECTION --- */
@@ -320,29 +314,10 @@ body {
     padding: 25px 30px;
 }
 
-.person-name {
-    font-weight: 700;
-    font-size: 1.6rem;
-}
-
-.person-name-next {
-    font-weight: 700;
-    font-size: 1.3rem;
-    color: white;
-    opacity: 1;
-}
-
-.person-time {
-    font-weight: 700;
-    font-size: 1.5rem;
-    color: #333333;
-}
-
-.person-time-next {
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: #ffffff;
-}
+.person-name { font-weight: 700; font-size: 1.6rem; }
+.person-name-next { font-weight: 700; font-size: 1.3rem; color: white; }
+.person-time { font-weight: 700; font-size: 1.5rem; color: #333333; }
+.person-time-next { font-weight: 700; font-size: 1.2rem; color: #ffffff; }
 
 .driver-card.upcoming, .spotter-card.upcoming {
     background-color: #555555;
@@ -353,52 +328,7 @@ body {
     box-shadow: 0px 0px 10px rgba(85, 85, 85, 1);
 }
 
-/* --- TWITCH STREAMERS SECTIE (Nu écht helemaal onderaan) --- */
-
-.twitch-title {
-    font-family: 'Orbitron', sans-serif !important; /* Zelfde font als de 'Kijk live mee' tekst */
-    font-weight: 700;
-    font-size: 2.2rem; /* Lekker groot en prominent */
-    color: #ffffff;
-    letter-spacing: 2px;
-    margin-bottom: 50px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px; /* Iets meer ruimte tussen het grote bolletje en de tekst */
-    width: 100%;
-}
-
-/* Maak het bolletje in de header een slag groter */
-.twitch-title .header-dot {
-    width: 18px;
-    height: 18px;
-    box-shadow: 0 0 15px #ff0000;
-}
-
-/* Zorg dat de pulserende animatie achter het grote bolletje ook meeschaalt */
-.twitch-title .header-dot::after {
-    animation: pulse-header 1.8s infinite ease-in-out;
-}
-
-/* Grotere felle neon-glow voor de tekst LIVE in de header */
-.twitch-title .header-live-text {
-    font-size: 2.4rem; /* Iets groter dan de rest van de titel */
-    text-shadow: 0 0 15px rgba(255, 0, 0, 0.9), 0 0 30px rgba(255, 0, 0, 0.5); 
-}
-
-/* De speciale grotere animatie voor het header-bolletje */
-@keyframes pulse-header {
-    0% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
-    100% {
-        transform: scale(2.2);
-        opacity: 0;
-    }
-}
-
+/* --- TWITCH STREAMERS SECTIE --- */
 html {
     scroll-behavior: smooth;
 }
@@ -408,28 +338,42 @@ html {
     width: 100%;
     text-align: center;
     padding: 60px 20px 80px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* De prominente LIVE header */
 .twitch-title {
-    font-family: 'Speeday', sans-serif;
-    font-weight: 100;
-    font-size: 2rem;
+    font-family: 'Orbitron', sans-serif !important;
+    font-weight: 700;
+    font-size: 2.2rem;
     color: #ffffff;
     letter-spacing: 2px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
 }
 
-.twitch-title::after {
-    content: "TEAM STREAMS"; 
-    position: absolute;
-    left: 0px;
-    top: 2950px;
-    z-index: -1;
-    width: 100%;
-    background: linear-gradient(to right, #fe921c, #ff0000);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+.twitch-title .header-dot {
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 0 15px #ff0000;
+}
+
+.twitch-title .header-dot::after {
+    animation: pulse-header 1.8s infinite ease-in-out;
+}
+
+.twitch-title .header-live-text {
+    font-size: 2.4rem;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.9), 0 0 30px rgba(255, 0, 0, 0.5); 
+}
+
+@keyframes pulse-header {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(2.2); opacity: 0; }
 }
 
 .streamers-container {
@@ -448,11 +392,16 @@ html {
     text-decoration: none;
 }
 
+/* Slimme border-gradient via de wrapper element */
 .avatar-wrapper {
     position: relative;
     width: 130px;
     height: 130px;
     margin-bottom: 15px;
+    border-radius: 50%;
+    padding: 3px; /* Dit bepaalt de dikte van je border */
+    background: transparent;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .streamer-avatar {
@@ -460,8 +409,8 @@ html {
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #222222;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    background-color: #222222; /* Voorkomt doorschijnen */
+    display: block;
 }
 
 .streamer-name {
@@ -470,21 +419,22 @@ html {
     font-size: 1.1rem;
     color: #ffffff;
     letter-spacing: 1px;
-    transition: color 0.2s ease;
+    transition: color 0.3s ease;
 }
 
-.streamer-card-link:hover .streamer-avatar {
-    border-color: #e6e6e6;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+/* Hover effecten voor Desktop */
+.streamer-card-link:hover .avatar-wrapper {
+    background: linear-gradient(to right, #fe921c, #ff0000);
+    box-shadow: 0 0 20px rgba(254, 146, 28, 0.5);
     transform: scale(1.05);
 }
 
 .streamer-card-link:hover .streamer-name {
-    color: #ffffff;
+    color: #fe921c;
 }
 
 
-/* --- MOBIELE RESPONSIVE INDELING --- */
+/* --- MOBIELE RESPONSIVE INDELING (O.A. IPHONE) --- */
 @media screen and (max-width: 768px) {
     
     .lineup-table .table-header {
@@ -601,47 +551,48 @@ html {
         font-size: 15px !important;
     }
 
-    /* Mobiele stijlen voor de Twitch sectie */
+    /* Mobiele stijlen voor de 'Kijk live mee' link */
     .live-link {
         font-size: 0.9rem !important;
     }
     
+    /* Mobiele stijlen voor de Twitch sectie */
     .twitch-section {
-        padding: 40px 20px 50px 20px !important;
+        padding: 40px 15px 60px 15px !important;
     }
     
+    /* Grote live header schaalt nu perfect op mobiel */
     .twitch-title {
+        font-size: 1.4rem !important;
+        margin-bottom: 35px !important;
+        gap: 10px !important;
+    }
+
+    .twitch-title .header-dot {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    .twitch-title .header-live-text {
         font-size: 1.5rem !important;
-        margin-bottom: 30px !important;
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.9) !important;
     }
     
     .streamers-container {
         gap: 30px !important;
     }
     
+    /* Profielfoto's worden kleiner en tonen direct de verloop-border */
     .avatar-wrapper {
-        width: 100px !important;
-        height: 100px !important;
+        width: 95px !important;
+        height: 95px !important;
+        padding: 2px !important; /* Iets dunnere border op mobiel */
+        background: linear-gradient(to right, #fe921c, #ff0000) !important; /* Altijd zichtbaar op mobiel! */
+        box-shadow: 0 0 12px rgba(254, 146, 28, 0.4) !important;
     }
     
     .streamer-name {
         font-size: 0.9rem !important;
-    }
-
-    /* VERVANG DE .twitch-title CODE BINNEN JOUW @MEDIA QUERY DOOR DIT: */
-    .twitch-title {
-        font-size: 1.4rem !important; /* Perfecte grootte voor mobiele schermen */
-        margin-bottom: 30px !important;
-        gap: 10px !important;
-    }
-
-    .twitch-title .header-dot {
-        width: 12px !important; /* Op mobiel wordt het bolletje weer normaal */
-        height: 12px !important;
-    }
-
-    .twitch-title .header-live-text {
-        font-size: 1.5rem !important; /* Schaalt netjes mee op iPhone */
-        text-shadow: 0 0 10px rgba(255, 0, 0, 0.9) !important;
+        color: #fe921c !important; /* Oranje naam op mobiel omdat je daar niet echt kunt 'hoveren' */
     }
 }
