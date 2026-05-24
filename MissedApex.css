@@ -9,7 +9,6 @@
     src: url('Speeday-Regular-FFP.ttf') format('truetype');
 }
 
-
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #0b0b0b;
@@ -19,10 +18,10 @@ body {
     flex-direction: column;
 }
 
-/* --- HERO SECTION (Aangepast) --- */
+/* --- HERO SECTION --- */
 .hero-section {
     position: relative;
-    height: 60vh; /* Neemt 45% van de schermhoogte in */
+    height: 60vh;
     background-image: url('spa-background.jpg');
     background-size: cover;
     background-position: center;
@@ -32,7 +31,6 @@ body {
     text-align: center;
 }
 
-/* Donkere filter over de foto voor betere leesbaarheid (behouden) */
 .overlay {
     position: absolute;
     top: 0;
@@ -60,7 +58,6 @@ body {
     margin-bottom: 0px;
 }
 
-/* Nieuwe teamnaamstijl met oranje-wit verloop */
 .team-name {
     font-family: 'Speeday', sans-serif;
     font-style: italic;
@@ -68,8 +65,6 @@ body {
     font-size: 1rem;
     letter-spacing: 2px;
     margin-bottom: 100px;
-    
-    /* De bovenste laag maken we helemaal wit */
     color: #ffffff;
     position: relative;
     display: inline-block;
@@ -78,14 +73,11 @@ body {
 
 .team-name::after {
     content: "MISSED APEX B.V."; 
-    
     position: absolute;
     left: 2px;
-    top: 0px; /* Hoe groter dit getal, hoe verder de verlooptekst eronderuit komt */
+    top: 0px;
     z-index: -1;
     width: 100%;
-    
-    /* Het verloop van jouw specifieke oranje naar rood */
     background: linear-gradient(to right, #fe921c, #ff0000);
     -webkit-background-clip: text;
     background-clip: text;
@@ -119,7 +111,74 @@ body {
     letter-spacing: 2px;
 }
 
-/* --- SCHEDULE SECTION (Aangepast) --- */
+/* --- LIVE STREAM LINK & ANIMATIE --- */
+.live-stream-trigger {
+    text-align: center;
+    margin-top: -30px;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 10;
+}
+
+.live-link {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #ffffff;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 1px;
+    transition: transform 0.2s ease, text-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.live-link:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+.live-text-bold {
+    color: #ff0000;
+    font-weight: 900;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4); 
+}
+
+.live-dot {
+    width: 12px;
+    height: 12px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 0 10px #ff0000;
+}
+
+.live-dot::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ff0000;
+    border-radius: 50%;
+    z-index: -1;
+    animation: pulse 1.8s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+/* --- SCHEDULE SECTION --- */
 .schedule-section {
     background: linear-gradient(to bottom, #0b0b0b, #121212);
     padding: 40px 20px;
@@ -129,19 +188,15 @@ body {
     flex-grow: 1;
 }
 
-/* Hoofdtitel (behouden, nu ook met verloop) */
 .main-title {
     margin-top: 100px;
-    font-family: 'Speeday', sans-serif; /* Vervang dit eventueel door jouw eigen font-naam */
+    font-family: 'Speeday', sans-serif;
     font-weight: 100;
     font-size: 2.5rem;
     letter-spacing: 2px;
     margin-bottom: 100px;
     text-align: center;
-    
-    /* Voorkomt dat de schuine letters aan de rechterkant wegvallen */
     padding-right: 20px; 
-    
     color: #ffffff;
     position: relative;
     display: inline-block;
@@ -150,27 +205,22 @@ body {
 
 .main-title::after{
     content: "LINE-UP SCHEMA"; 
-    
     position: absolute;
     left: -7px;
     top: 0px;
     z-index: -1;
     width: 100%;
-    
-    /* Het verloop van jouw specifieke oranje naar rood */
     background: linear-gradient(to right, #fe921c, #ff0000);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-
-/* Line-up tabel layout */
 .lineup-table {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 1200px; /* Iets breder voor twee kolommen */
+    max-width: 1200px;
 }
 
 .table-header, .table-row {
@@ -179,7 +229,6 @@ body {
     align-items: center;
 }
 
-/* Zorgt dat de "Next Up" rij de kolommen aan de bovenkant uitlijnt in plaats van het midden */
 .next-up-section {
     align-items: flex-start; 
 }
@@ -192,7 +241,7 @@ body {
 }
 
 .table-cell.middle {
-    flex: 0 0 150px; /* Vaste breedte voor het middenlabel */
+    flex: 0 0 150px;
     text-align: center;
 }
 
@@ -200,7 +249,6 @@ body {
      flex: 0 0 150px;
 }
 
-/* Kolom Titels */
 .column-title {
     font-family: 'Speeday', sans-serif;
     font-size: 1.1rem;
@@ -215,13 +263,11 @@ body {
     padding-left: 220px;
 }
 
-.column-title spotter-title {
+.column-title.spotter-title {
     text-align: right;
-    padding-left: 220px;
-    margin-left: 220px;
+    padding-right: 220px;
 }
 
-/* --- MIDDEN LABELS (Gecorrigeerd voor top-uitlijning) --- */
 .status-label-current {
     font-family: 'Orbitron', sans-serif;
     font-style: italic;
@@ -233,7 +279,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 50px;
-    margin-bottom: 20px; /* Extra ruimte onder het huidige label */
+    margin-bottom: 20px;
     margin-left: 10px;
 }
 
@@ -245,14 +291,13 @@ body {
     color: #ffffff;
     opacity: 0.8;
     display: flex;
-    align-items: center;     /* Centreert de tekst binnen zijn eigen 50px hoogte */
-    justify-content: center;  /* Centreert horizontaal */
-    height: 50px;            /* Exact even hoog als de eerste grijze kaart */
+    align-items: center;
+    justify-content: center;
+    height: 50px;
     margin-top: 0px;         
-    padding-left: 10px;      /* Iets teruggebracht vanaf 20px voor betere centrering in de 150px kolom */
+    padding-left: 10px;
 }
 
-/* Kaarten (Aangepast voor twee kolommen en twee info-velden) */
 .table-row {
     margin-bottom: 50px;
 }
@@ -264,16 +309,15 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 25px;
-    margin-bottom: 12px; /* Ruimte tussen kaarten in de kolom */
+    margin-bottom: 12px;
 }
 
-/* Witte actieve kaarten */
 .driver-card.current, .spotter-card.current {
     background-color: #ffffff;
     color: #000000;
     box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
-    margin-bottom: 20px; /* Extra ruimte onder actieve kaart */
-    padding: 25px 30px; /* Iets meer padding voor actieve kaarten */
+    margin-bottom: 20px;
+    padding: 25px 30px;
 }
 
 .person-name {
@@ -287,7 +331,6 @@ body {
     color: white;
     opacity: 1;
 }
-
 
 .person-time {
     font-weight: 700;
@@ -310,44 +353,151 @@ body {
     box-shadow: 0px 0px 10px rgba(85, 85, 85, 1);
 }
 
+/* --- TWITCH STREAMERS SECTIE (Nu écht helemaal onderaan) --- */
+
+.twitch-title {
+    font-family: 'Orbitron', sans-serif !important; /* Zelfde font als de 'Kijk live mee' tekst */
+    font-weight: 700;
+    font-size: 2.2rem; /* Lekker groot en prominent */
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px; /* Iets meer ruimte tussen het grote bolletje en de tekst */
+    width: 100%;
+}
+
+/* Maak het bolletje in de header een slag groter */
+.twitch-title .header-dot {
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 0 15px #ff0000;
+}
+
+/* Zorg dat de pulserende animatie achter het grote bolletje ook meeschaalt */
+.twitch-title .header-dot::after {
+    animation: pulse-header 1.8s infinite ease-in-out;
+}
+
+/* Grotere felle neon-glow voor de tekst LIVE in de header */
+.twitch-title .header-live-text {
+    font-size: 2.4rem; /* Iets groter dan de rest van de titel */
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.9), 0 0 30px rgba(255, 0, 0, 0.5); 
+}
+
+/* De speciale grotere animatie voor het header-bolletje */
+@keyframes pulse-header {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(2.2);
+        opacity: 0;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.twitch-section {
+    background-color: #121212;
+    width: 100%;
+    text-align: center;
+    padding: 60px 20px 80px 20px;
+}
+
+.twitch-title {
+    font-family: 'Speeday', sans-serif;
+    font-weight: 100;
+    font-size: 2rem;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+}
+
+.twitch-title::after {
+    content: "TEAM STREAMS"; 
+    position: absolute;
+    left: 0px;
+    top: 2950px;
+    z-index: -1;
+    width: 100%;
+    background: linear-gradient(to right, #fe921c, #ff0000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.streamers-container {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.streamer-card-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin-bottom: 15px;
+}
+
+.streamer-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #222222;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.streamer-name {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #ffffff;
+    letter-spacing: 1px;
+    transition: color 0.2s ease;
+}
+
+.streamer-card-link:hover .streamer-avatar {
+    border-color: #e6e6e6;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
+}
+
+.streamer-card-link:hover .streamer-name {
+    color: #ffffff;
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Responsive aanpassingen voor mobiel */
-/* --- MOBIELE RESPONSIVE INDELING (Uitsluitend voor telefoons) --- */
+/* --- MOBIELE RESPONSIVE INDELING --- */
 @media screen and (max-width: 768px) {
     
-    /* Verberg de desktop kolomkoppen (DRIVERS / SPOTTERS) bovenin */
     .lineup-table .table-header {
         display: none !important;
     }
     
-    /* Verander de tabelrijen in verticale stapels */
     .lineup-table .table-row {
-        display:flex !important;
+        display: flex !important;
         flex-direction: column !important;
         margin-bottom: 30px !important;
         width: 100% !important;
     }
     
-    /* Forceer alle cellen naar de volledige breedte */
     .lineup-table .table-cell.left, 
     .lineup-table .table-cell.right, 
     .lineup-table .table-cell.middle {
@@ -358,28 +508,25 @@ body {
         display: block !important;
     }
 
-    /* --- 1. DE CURRENT SECTIE --- */
+    /* --- 1. CURRENT SECTIE --- */
     .lineup-table .current-section {
         display: flex !important;
         flex-direction: column !important;
     }
-    /* Volgorde bepalen: Eerst label, dan driver, dan spotter */
     .lineup-table .current-section .table-cell.middle { order: 1 !important; margin-bottom: 10px !important; }
     .lineup-table .current-section .table-cell.left   { order: 2 !important; }
     .lineup-table .current-section .table-cell.right  { order: 3 !important; }
 
-    /* --- 2. DE NEXT UP SECTIE --- */
+    /* --- 2. NEXT UP SECTIE --- */
     .lineup-table .next-up-section {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
     }
-    /* De magische volgorde: Eerst het label, dan ALLE drivers, dan ALLE spotters */
     .lineup-table .next-up-section .table-cell.middle { order: 1 !important; margin-bottom: 20px !important; }
     .lineup-table .next-up-section .table-cell.left   { order: 2 !important; width: 100% !important; }
     .lineup-table .next-up-section .table-cell.right  { order: 3 !important; width: 100% !important; margin-top: 20px !important; }
 
-    /* Extra titels toevoegen boven de lijsten via CSS zodat je weet wat wat is */
     .lineup-table .next-up-section #upcoming-drivers-container::before {
         content: "DRIVERS" !important;
         display: block !important;
@@ -403,70 +550,98 @@ body {
         letter-spacing: 1px !important;
     }
 
-    /* Midden labels mooi centreren op mobiel */
     .lineup-table .status-label-current, .lineup-table .status-label-next {
-        margin-bottom: 2 auto !important;
+        margin: 0 auto !important;
         padding: 0 !important;
         height: auto !important;
         font-size: 1rem !important;
     }
 
-    .hero-section{
-
-        height: 80vh !important; /* Neemt 45% van de schermhoogte in */
+    .hero-section {
+        height: 80vh !important;
     }
 
     .logo {
         margin-top: 0 !important;
         width: 100px !important;
         margin-bottom: 0px !important;
-}
+    }
 
-    .hero-content{
+    .hero-content {
         margin-top: 200px !important;
     }
 
     .team-name {
-    margin-bottom: 50px !important;
-    font-size: 14px !important;
-    font-family: 'Speeday' !important;
-    font-style: italic !important;
-    font-weight: 100 !important;
-}
+        margin-bottom: 50px !important;
+        font-size: 14px !important;
+        font-family: 'Speeday' !important;
+        font-style: italic !important;
+        font-weight: 100 !important;
+    }
 
-    .main-title{
-    margin-top: 100px !important;
-    font-family: 'Speeday' !important;
-    font-weight: 100 !important;
+    .main-title {
+        margin-top: 100px !important;
+        font-family: 'Speeday' !important;
+        font-weight: 100 !important;
     }
 
     .countdown-box {
-    padding: 15px 50px !important;
+        padding: 15px 50px !important;
     }
 
-    .timer{
+    .timer {
         font-size: 25px !important;
     }
 
-    .countdown-title{
+    .countdown-title {
         font-size: 10px !important;
     }
 
-    .person-name{
+    .person-name, .person-name-next, .person-time, .person-time-next {
         font-size: 15px !important;
     }
 
-    .person-name-next{
-        font-size: 15px !important;
-    }
-
-    
-    .person-time{
-        font-size: 15px !important;
-    }
-
-    .person-time-next{
-        font-size: 15px !important;
+    /* Mobiele stijlen voor de Twitch sectie */
+    .live-link {
+        font-size: 0.9rem !important;
     }
     
+    .twitch-section {
+        padding: 40px 20px 50px 20px !important;
+    }
+    
+    .twitch-title {
+        font-size: 1.5rem !important;
+        margin-bottom: 30px !important;
+    }
+    
+    .streamers-container {
+        gap: 30px !important;
+    }
+    
+    .avatar-wrapper {
+        width: 100px !important;
+        height: 100px !important;
+    }
+    
+    .streamer-name {
+        font-size: 0.9rem !important;
+    }
+
+    /* VERVANG DE .twitch-title CODE BINNEN JOUW @MEDIA QUERY DOOR DIT: */
+    .twitch-title {
+        font-size: 1.4rem !important; /* Perfecte grootte voor mobiele schermen */
+        margin-bottom: 30px !important;
+        gap: 10px !important;
+    }
+
+    .twitch-title .header-dot {
+        width: 12px !important; /* Op mobiel wordt het bolletje weer normaal */
+        height: 12px !important;
+    }
+
+    .twitch-title .header-live-text {
+        font-size: 1.5rem !important; /* Schaalt netjes mee op iPhone */
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.9) !important;
+    }
 }
