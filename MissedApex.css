@@ -430,7 +430,7 @@ html {
 }
 
 .streamer-card-link:hover .streamer-name {
-    color: #fe921c;
+    color: #ffffff;
 }
 
 
@@ -593,6 +593,5 @@ html {
     
     .streamer-name {
         font-size: 0.9rem !important;
-        color: #fe921c !important; /* Oranje naam op mobiel omdat je daar niet echt kunt 'hoveren' */
     }
 }
