@@ -97,9 +97,9 @@
             let doeltijd, statusTekst, toonDagen = false;
 
             if (nu < startKwalificatie) {
-                doeltijd = startKwalificatie; statusTekst = "TOT START KWALIFICATIE"; toonDagen = true;
+                doeltijd = startKwalificatie; statusTekst = "TOT KWALIFICATIE"; toonDagen = true;
             } else if (nu >= startKwalificatie && nu < startRace) {
-                doeltijd = startRace; statusTekst = "TOT EINDE KWALIFICATIE";
+                doeltijd = startRace; statusTekst = "KWALIFICATIE";
             } else if (nu >= startRace && nu < eindeRace) {
                 doeltijd = eindeRace; statusTekst = "RACE";
             } else {
