@@ -18,7 +18,6 @@ body {
     flex-direction: column;
 }
 
-
 .hero-section {
     position: relative;
     height: 60vh;
@@ -111,7 +110,6 @@ body {
     letter-spacing: 2px;
 }
 
-
 .live-stream-trigger {
     text-align: center;
     margin-top: -30px;
@@ -172,7 +170,6 @@ body {
     100% { transform: scale(2.5); opacity: 0; }
 }
 
-
 .schedule-section {
     background: linear-gradient(to bottom, #0b0b0b, #121212);
     padding: 40px 20px;
@@ -223,6 +220,10 @@ body {
     align-items: center;
 }
 
+.current-section {
+    align-items: center; 
+}
+
 .next-up-section {
     align-items: flex-start; 
 }
@@ -265,31 +266,31 @@ body {
 .status-label-current {
     font-family: 'Orbitron', sans-serif;
     font-style: italic;
-    font-weight: 100;
+    font-weight: 900;
     font-size: 1.2rem;
     color: #ffffff;
-    opacity: 0.8;
+    opacity: 0.9;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 50px;
     margin-bottom: 20px;
-    margin-left: 10px;
+    text-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 
 .status-label-next {
     font-family: 'Orbitron', sans-serif;
     font-style: italic;
-    font-weight: 100;
-    font-size: 1.0rem;
+    font-weight: 900;
+    font-size: 1.1rem;
     color: #ffffff;
-    opacity: 0.8;
+    opacity: 0.9;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 50px;
     margin-top: 0px;         
-    padding-left: 10px;
+    text-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 
 .table-row {
@@ -328,6 +329,17 @@ body {
     box-shadow: 0px 0px 10px rgba(85, 85, 85, 1);
 }
 
+.empty-schedule-balk {
+    background-color: #1a1a1a !important;
+    border: 1px dashed #333333;
+    opacity: 0.5 !important;
+}
+.empty-schedule-balk .person-name-next {
+    color: #888888 !important;
+}
+.empty-schedule-balk .person-time-next {
+    color: #555555 !important;
+}
 
 html {
     scroll-behavior: smooth;
@@ -339,7 +351,6 @@ html {
     text-align: center;
     padding: 60px 20px 80px 20px;
 }
-
 
 .twitch-title {
     font-family: 'Orbitron', sans-serif !important;
@@ -391,7 +402,6 @@ html {
     text-decoration: none;
 }
 
-
 .avatar-wrapper {
     position: relative;
     width: 130px;
@@ -421,7 +431,6 @@ html {
     transition: color 0.3s ease;
 }
 
-
 .streamer-card-link:hover .avatar-wrapper {
     background: linear-gradient(to right, #fe921c, #ff0000);
     box-shadow: 0 0 20px rgba(254, 146, 28, 0.5);
@@ -432,8 +441,7 @@ html {
     color: #ffffff;
 }
 
-
-
+/* --- MOBIELE RESPONSIVE INDELING --- */
 @media screen and (max-width: 768px) {
     
     .lineup-table .table-header {
@@ -457,22 +465,20 @@ html {
         display: block !important;
     }
 
-    
     .lineup-table .current-section {
         display: flex !important;
         flex-direction: column !important;
     }
-    .lineup-table .current-section .table-cell.middle { order: 1 !important; margin-bottom: 10px !important; }
+    .lineup-table .current-section .table-cell.middle { order: 1 !important; margin-bottom: 15px !important; margin-top: 10px !important; }
     .lineup-table .current-section .table-cell.left   { order: 2 !important; }
     .lineup-table .current-section .table-cell.right  { order: 3 !important; }
 
-    
     .lineup-table .next-up-section {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
     }
-    .lineup-table .next-up-section .table-cell.middle { order: 1 !important; margin-bottom: 20px !important; }
+    .lineup-table .next-up-section .table-cell.middle { order: 1 !important; margin-bottom: 20px !important; margin-top: 15px !important; }
     .lineup-table .next-up-section .table-cell.left   { order: 2 !important; width: 100% !important; }
     .lineup-table .next-up-section .table-cell.right  { order: 3 !important; width: 100% !important; margin-top: 20px !important; }
 
@@ -503,7 +509,7 @@ html {
         margin: 0 auto !important;
         padding: 0 !important;
         height: auto !important;
-        font-size: 1rem !important;
+        font-size: 1.1rem !important;
     }
 
     .hero-section {
@@ -550,16 +556,13 @@ html {
         font-size: 15px !important;
     }
 
-    
     .live-link {
         font-size: 0.9rem !important;
     }
     
-    
     .twitch-section {
         padding: 40px 15px 60px 15px !important;
     }
-    
     
     .twitch-title {
         font-size: 1.4rem !important;
@@ -581,7 +584,6 @@ html {
         gap: 30px !important;
     }
     
-    
     .avatar-wrapper {
         width: 95px !important;
         height: 95px !important;
@@ -592,5 +594,87 @@ html {
     
     .streamer-name {
         font-size: 0.9rem !important;
+    }
+}
+
+.filter-container {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 999;
+    position: relative;
+}
+
+.filter-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: #888888;
+    text-transform: uppercase;
+}
+
+.filter-select {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 8px; 
+    cursor: pointer;
+    outline: none;
+    min-width: 250px;
+    text-align: center;
+    
+
+    border: 2px solid transparent;
+    background-image: linear-gradient(#1a1a1a, #1a1a1a), linear-gradient(#333333, #333333);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    
+    transition: background 0.2s ease, box-shadow 0.2s ease, border-radius 0.1s ease;
+}
+
+.filter-select:hover {
+    border: 2px solid transparent;
+    background-image: linear-gradient(#1a1a1a, #1a1a1a), linear-gradient(to right, #fe921c, #ff0000);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    box-shadow: 0 0 20px rgba(254, 146, 28, 0.4);
+    border-radius: 8px; 
+}
+
+.filter-select:focus {
+    border: 2px solid transparent;
+    background-image: linear-gradient(#1a1a1a, #1a1a1a), linear-gradient(to right, #fe921c, #ff0000);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    box-shadow: 0 0 25px rgba(254, 146, 28, 0.5);
+    border-radius: 8px 8px 0px 0px; 
+}
+
+.filter-select option {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 12px;
+}
+
+.filter-select select::-ms-expand {
+    display: none;
+}
+
+.filter-select option:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+@media screen and (max-width: 768px) {
+    .filter-container {
+        margin-bottom: 50px;
+        width: 100%;
+        padding: 0 20px;
+    }
+    .filter-select {
+        width: 100%;
     }
 }
