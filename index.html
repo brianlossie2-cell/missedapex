@@ -32,6 +32,13 @@
     <main class="schedule-section">
         <h1 class="main-title">LINE-UP SCHEMA</h1>
 
+        <div class="filter-container">
+            <label for="name-filter" class="filter-label">Filter</label>
+            <select id="name-filter" class="filter-select">
+                <option value="ALL">Toon iedereen</option>
+                </select>
+        </div>
+
         <div class="lineup-table">
             <div class="table-header">
                 <div class="table-cell left">
@@ -100,9 +107,9 @@
 
     <script>
         // --- CONFIGURATIE DATA ---
-        const startKwalificatie = new Date("2026-07-11T14:30:00").getTime();
-        const raceStartDatum = new Date("2026-07-11T14:50:00"); 
-        const eindeRace         = new Date("2026-07-12T14:50:00").getTime();
+        const startKwalificatie = new Date("2026-05-28T14:30:00").getTime();
+        const raceStartDatum = new Date("2026-05-28T14:50:00"); 
+        const eindeRace         = new Date("2026-05-29T14:50:00").getTime();
         const startRace         = raceStartDatum.getTime(); 
 
         let csvData = "";
@@ -114,6 +121,7 @@
             })
             .then(text => {
                 csvData = text;
+                bouwNaamFilter();
                 updateSchedule();
             })
             .catch(error => {
@@ -226,9 +234,36 @@
             return { drivers, spotters };
         }
 
+        function bouwNaamFilter() {
+            const { drivers, spotters } = parseScheduleCSV(csvData);
+            const filterDropdown = document.getElementById('name-filter');
+            if (!filterDropdown) return;
+            
+            let uniekeNamen = new Set();
+            drivers.forEach(d => uniekeNamen.add(d.name));
+            spotters.forEach(s => uniekeNamen.add(s.name));
+            
+            let gesorteerdeNamen = Array.from(uniekeNamen).sort();
+            
+            gesorteerdeNamen.forEach(naam => {
+                const optie = document.createElement('option');
+                optie.value = naam;
+                
+                const geformatteerdeNaam = naam.charAt(0).toUpperCase() + naam.slice(1).toLowerCase();
+                optie.innerText = geformatteerdeNaam;
+                
+                filterDropdown.appendChild(optie);
+            });
+            
+            filterDropdown.addEventListener('change', updateSchedule);
+        }
+
         function updateSchedule() {
             const { drivers, spotters } = parseScheduleCSV(csvData);
             const nu = new Date().getTime(); 
+
+            const filterDropdown = document.getElementById('name-filter');
+            const geselecteerdeNaam = filterDropdown ? filterDropdown.value : "ALL";
 
             const sorteerChronologisch = (a, b) => a.exactStart - b.exactStart;
             drivers.sort(sorteerChronologisch);
@@ -253,17 +288,33 @@
                             <span class="person-time">${d.startTimeText} - ${d.endTimeText}</span>
                         </div>`;
                     currentDriverFound = true;
-                } else if (d.exactStart >= nu) {
-                    upcomingDriversBox.innerHTML += `
-                        <div class="driver-card upcoming">
-                            <span class="person-name-next">${d.name}</span>
-                            <span class="person-time-next">${d.startTimeText} - ${d.endTimeText}</span>
-                        </div>`;
                 }
             });
 
             if (!currentDriverFound) {
-                currentDriverBox.innerHTML = `<div class="driver-card current" style="background-color: #1a1a1a; color: #888;"><span class="person-name">Geen actieve rijder</span><span class="person-time">--:--</span></div>`;
+                currentDriverBox.innerHTML = `<div class="driver-card current" style="background-color: #1a1a1a; color: #888;"><span class="person-name">Geen actieve driver</span><span class="person-time">--:--</span></div>`;
+            }
+
+            let upcomingDriversCount = 0;
+            drivers.forEach(d => {
+                if (d.exactStart >= nu) {
+                    if (geselecteerdeNaam === "ALL" || d.name === geselecteerdeNaam) {
+                        upcomingDriversBox.innerHTML += `
+                            <div class="driver-card upcoming">
+                                <span class="person-name-next">${d.name}</span>
+                                <span class="person-time-next">${d.startTimeText} - ${d.endTimeText}</span>
+                            </div>`;
+                        upcomingDriversCount++;
+                    }
+                }
+            });
+
+            if (upcomingDriversCount === 0) {
+                upcomingDriversBox.innerHTML = `
+                    <div class="driver-card upcoming empty-schedule-balk">
+                        <span class="person-name-next">Geen komende drivers</span>
+                        <span class="person-time-next">--:--</span>
+                    </div>`;
             }
 
             let currentSpotterFound = false;
@@ -275,17 +326,33 @@
                             <span class="person-time">${s.startTimeText} - ${s.endTimeText}</span>
                         </div>`;
                     currentSpotterFound = true;
-                } else if (s.exactStart >= nu) {
-                    upcomingSpottersBox.innerHTML += `
-                        <div class="spotter-card upcoming">
-                            <span class="person-name-next">${s.name}</span>
-                            <span class="person-time-next">${s.startTimeText} - ${s.endTimeText}</span>
-                        </div>`;
                 }
             });
 
             if (!currentSpotterFound) {
                 currentSpotterBox.innerHTML = `<div class="spotter-card current" style="background-color: #1a1a1a; color: #888;"><span class="person-name">Geen actieve spotter</span><span class="person-time">--:--</span></div>`;
+            }
+
+            let upcomingSpottersCount = 0;
+            spotters.forEach(s => {
+                if (s.exactStart >= nu) {
+                    if (geselecteerdeNaam === "ALL" || s.name === geselecteerdeNaam) {
+                        upcomingSpottersBox.innerHTML += `
+                            <div class="spotter-card upcoming">
+                                <span class="person-name-next">${s.name}</span>
+                                <span class="person-time-next">${s.startTimeText} - ${s.endTimeText}</span>
+                            </div>`;
+                        upcomingSpottersCount++;
+                    }
+                }
+            });
+
+            if (upcomingSpottersCount === 0) {
+                upcomingSpottersBox.innerHTML = `
+                    <div class="spotter-card upcoming empty-schedule-balk">
+                        <span class="person-name-next">Geen komende spotters</span>
+                        <span class="person-time-next">--:--</span>
+                    </div>`;
             }
         }
 
