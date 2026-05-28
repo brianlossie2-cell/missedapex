@@ -598,7 +598,7 @@ html {
 }
 
 .filter-container {
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -621,15 +621,19 @@ html {
     font-size: 1.1rem;
     color: #ffffff;
     
+    /* BEHOUDEN VAN JOUW MAAT: Exact de 10px 20px padding die je had */
     padding: 10px 20px;
     border-radius: 8px; 
     cursor: pointer;
     outline: none;
     min-width: 250px;
     
+    /* PERFECTE CENTRERING: Dit forceert de tekst in het absolute midden */
     text-align: center;
     text-align-last: center;
 
+    /* PIJLTJE MET RUIMTE: We verbergen het browser-pijltje en maken een eigen pijltje met SVG. 
+       De 'calc(100% - 18px)' zorgt ervoor dat het pijltje exact 18px van de rechterrand af staat (ademruimte). */
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -679,5 +683,9 @@ html {
     .filter-container {
         margin-bottom: 50px;
         width: 100%;
+    }
+
+    .filter-select {
+        font-size: 0.8rem !important;
     }
 }
